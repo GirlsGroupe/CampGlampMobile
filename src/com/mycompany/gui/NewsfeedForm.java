@@ -51,11 +51,10 @@ import com.codename1.ui.util.Resources;
 public class NewsfeedForm extends BaseForm {
 
     public NewsfeedForm(Resources res) {
-        super("Newsfeed", BoxLayout.y());
+        super("", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Newsfeed");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);

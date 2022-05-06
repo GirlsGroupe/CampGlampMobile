@@ -9,11 +9,13 @@ import com.codename1.components.InfiniteProgress;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entities.Utilisateurs;
 import com.mycompany.services.servicesUtilisateurs;
@@ -27,6 +29,7 @@ public class AjouterUtilisateur extends BaseForm {
     Form current;
 
     public AjouterUtilisateur(Resources res) {
+    super ("", BoxLayout.y()); //hesioste nen Newafeed w1 formulaire vertical
 
         Toolbar tbar = new Toolbar(true);
         current = this;
@@ -35,31 +38,33 @@ public class AjouterUtilisateur extends BaseForm {
         setTitle("Ajouter Utilisateur");
         getContentPane().setScrollVisible(false);
 
-        TextField Cin = new TextField("", "Entrer votre Numéro de carte d'identité!");
+       
+        
+        TextField Cin = new TextField("", "Numéro de cin",16,TextField.ANY);
         Cin.setUIID("TextFieldBlack");
         addStringValue("Cin", Cin);
 
-        TextField Nom = new TextField("", "Entrer votre Nom!");
+        TextField Nom = new TextField("", "Nom!",16,TextField.ANY);
         Nom.setUIID("TextFieldBlack");
         addStringValue("Nom", Nom);
 
-        TextField Prenom = new TextField("", "Entrer votre Prenom!");
+        TextField Prenom = new TextField("", " Prenom!",16,TextField.ANY);
         Prenom.setUIID("TextFieldBlack");
         addStringValue("Prenom", Prenom);
 
-        TextField Tel = new TextField("", "Entrer votre Numéro de téléphone!");
+        TextField Tel = new TextField("", "Numéro de téléphone!",16,TextField.ANY);
         Tel.setUIID("TextFieldBlack");
         addStringValue("Telephone", Tel);
 
-        TextField Adresse = new TextField("", "Entrer votre Adresse!");
+        TextField Adresse = new TextField("", "Adresse!",16,TextField.ANY);
         Adresse.setUIID("TextFieldBlack");
         addStringValue("Adresse", Adresse);
 
-        TextField Email = new TextField("", "Entrer votre Email!");
+        TextField Email = new TextField("", " Email!",16, TextField.ANY);
         Email.setUIID("TextFieldBlack");
         addStringValue("Email", Email);
 
-        TextField Motdepasse = new TextField("", "Entrer votre Mot de passe!");
+        TextField Motdepasse = new TextField("", "Mot de passe ", 16, TextField.PASSWORD);
         Motdepasse.setUIID("TextFieldBlack");
         addStringValue("Mot de passe", Motdepasse);
         
@@ -83,13 +88,14 @@ public class AjouterUtilisateur extends BaseForm {
                 //appel fonction 
                 servicesUtilisateurs.getInstance().ajoutUtilisateur(u);
                 Dialogs.dispose(); // nahi el loading
+                new ListeUtilisateurs(res).show();
                 refreshTheme();//actualisation
                 }
                 
                 
             } catch(Exception ex){
                 ex.printStackTrace();
-                
+               
             }
         });
 
