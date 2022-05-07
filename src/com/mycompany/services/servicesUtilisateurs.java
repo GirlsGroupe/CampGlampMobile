@@ -28,6 +28,7 @@ import java.util.Map;
 public class servicesUtilisateurs {
 
     public ArrayList<Utilisateurs> Users;
+    private boolean resultat;
 
     public static servicesUtilisateurs instance = null;
 
@@ -57,7 +58,7 @@ public class servicesUtilisateurs {
     }
     //Affichage
 
-    /* public ArrayList<Utilisateurs> afficherUtilisateurs() {
+    /*public ArrayList<Utilisateurs> afficherUtilisateurs() {
         ArrayList<Utilisateurs> rslt = new ArrayList<>();
         String url = Statics.Base_URL + "/listUsersM";
         req.setUrl(url);
@@ -202,4 +203,24 @@ public class servicesUtilisateurs {
         return resultat;
 
     }*/
+    
+    
+    public boolean deleteUser(int id) {
+        String url = Statics.Base_URL + "/deleteUsersM/"+id;
+        System.out.println(url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.setFailSilently(true);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultat = req.getResponseCode() == 200;
+                req.removeResponseListener(this);
+            }
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultat;
+
+}
 }
