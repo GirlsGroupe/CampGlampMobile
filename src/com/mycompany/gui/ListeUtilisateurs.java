@@ -102,9 +102,23 @@ public class ListeUtilisateurs extends BaseForm {
             }
         });
 
-        cnt.add(BorderLayout.CENTER, BoxLayout.encloseY(
+     
+        
+        
+        Label UpdateU = new Label(" ");
+        UpdateU.setUIID("NewsTopLine");
+        Style modifierStyle = new Style(UpdateU.getUnselectedStyle());
+        modifierStyle.setFgColor(0xf7ad02);
+        FontImage mFontImage = FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT, modifierStyle);
+        UpdateU.setIcon(mFontImage);
+        UpdateU.setTextPosition(LEFT);
+        UpdateU.addPointerPressedListener(l -> {
+            new UpdateUser(res, user).show();
+            
+        });
+           cnt.add(BorderLayout.CENTER, BoxLayout.encloseY(
                 BoxLayout.encloseX(Name),
-                BoxLayout.encloseX(DeletU)
+                BoxLayout.encloseX(UpdateU,DeletU)
         ));
         add(cnt);
     }

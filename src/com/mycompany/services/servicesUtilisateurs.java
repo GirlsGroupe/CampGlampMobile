@@ -45,7 +45,7 @@ public class servicesUtilisateurs {
         req = new ConnectionRequest();
 
     }
-  
+
     //affichage 
     public void ajoutUtilisateur(Utilisateurs utilisateur) {
         String url = Statics.Base_URL + "/addUsersM?cinuser=" + utilisateur.getCinUser() + "&nomuser=" + utilisateur.getNomUser() + "&prenomuser=" + utilisateur.getPrenomUser() + "&teluser=" + utilisateur.getTelUser() + "&adresseuser=" + utilisateur.getAdresseUser() + "&email=" + utilisateur.getEmail() + "&motdepasse=" + utilisateur.getMotdepasse() + "&role=" + Arrays.toString(utilisateur.getRole()) + "&image=" + utilisateur.getImage();
@@ -111,9 +111,9 @@ public class servicesUtilisateurs {
             Users = new ArrayList<>();
 
             JSONParser parser = new JSONParser();
-            System.out.println("-----------json----------------------");
+            /*System.out.println("-----------json----------------------");
             System.out.println(jsonTxt.toCharArray());
-
+*/
             Map<String, Object> UsersJSON;
             UsersJSON = parser.parseJSON(new CharArrayReader(jsonTxt.toCharArray()));
             List<Map<String, Object>> listOfMaps;
@@ -151,13 +151,11 @@ public class servicesUtilisateurs {
     public ArrayList<Utilisateurs> afficherUtilisateurs() {
         req = new ConnectionRequest();
         String url = Statics.Base_URL + "/listUsersM";
-        System.out.println("===>" + url);
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                System.out.println("hneeeeeeeeeeeeeeeeeeeeeeeee");
                 Users = parse(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
@@ -166,14 +164,22 @@ public class servicesUtilisateurs {
         return Users;
 
     }
-    /*
-    public boolean editGame(Game game) {
-        String url = Statics.BASE_URL + "/game/mobile/edit?id=" + game.getGameId()
-                + "&name=" + game.getGameName()
-                + "&description=" + game.getGameDescription()
-                + "&link=" + game.getGameLink()
-                + "&image=" + game.getGameImg();
+
+    public boolean updateUser(Utilisateurs user, int id) {
+        System.out.println("here");
+        String url = Statics.Base_URL + "/updateUsersM/"+id
+                + "?cinuser=" + user.getCinUser()
+                + "&nomuser=" + user.getNomUser()
+                + "&prenomuser=" + user.getPrenomUser()
+                + "&teluser=" + user.getTelUser()
+                + "&adresseuser=" + user.getAdresseUser()
+                + "&email=" + user.getEmail()
+                + "&motdepasse=" + user.getMotdepasse()
+                +"&image="+user.getImage();
+
+                
         req.setUrl(url);
+        System.out.println(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -185,28 +191,8 @@ public class servicesUtilisateurs {
         return resultat;
     }
 
-    public boolean deleteGame(int id) {
-        String url = Statics.BASE_URL + "/game/mobile/delete?id=" + id;
-
-        req.setUrl(url);
-        req.setPost(false);
-        req.setFailSilently(true);
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                resultat = req.getResponseCode() == 200;
-                req.removeResponseListener(this);
-            }
-
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return resultat;
-
-    }*/
-    
-    
     public boolean deleteUser(int id) {
-        String url = Statics.Base_URL + "/deleteUsersM/"+id;
+        String url = Statics.Base_URL + "/deleteUsersM/" + id;
         System.out.println(url);
         req.setUrl(url);
         req.setPost(false);
@@ -222,5 +208,5 @@ public class servicesUtilisateurs {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultat;
 
-}
+    }
 }
