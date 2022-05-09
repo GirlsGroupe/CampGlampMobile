@@ -51,7 +51,9 @@ public class MyApplication {
             current.show();
             return;
         }
-              new AjouterCentre(theme).show();
+             // new AjouterCentre(theme).show();
+            new Listecentre(theme).show();
+            //new MapForm();
 
     }
 

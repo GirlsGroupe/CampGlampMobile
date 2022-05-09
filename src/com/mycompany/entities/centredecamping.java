@@ -21,13 +21,7 @@ public class centredecamping {
     public centredecamping() {
     }
 
-    public centredecamping(String nomCentre, String adresseCentre, String typeCentre, String villeCentre, String gouvernorat) {
-        this.nomCentre = nomCentre;
-        this.adresseCentre = adresseCentre;
-        this.typeCentre = typeCentre;
-        this.villeCentre = villeCentre;
-        this.gouvernorat = gouvernorat;
-    }
+
 
 
 
@@ -91,6 +85,15 @@ public class centredecamping {
 
     public centredecamping(int idCentre, String nomCentre, String adresseCentre, float prixCentre, String typeCentre, String villeCentre, String gouvernorat) {
         this.idCentre = idCentre;
+        this.nomCentre = nomCentre;
+        this.adresseCentre = adresseCentre;
+        this.prixCentre = prixCentre;
+        this.typeCentre = typeCentre;
+        this.villeCentre = villeCentre;
+        this.gouvernorat = gouvernorat;
+    }
+    
+        public centredecamping( String nomCentre, String adresseCentre, float prixCentre, String typeCentre, String villeCentre, String gouvernorat) {
         this.nomCentre = nomCentre;
         this.adresseCentre = adresseCentre;
         this.prixCentre = prixCentre;

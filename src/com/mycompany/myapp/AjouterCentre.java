@@ -5,7 +5,6 @@
  */
 package com.mycompany.myapp;
 
-
 import com.mycompany.entities.centredecamping;
 import com.mycompany.services.servicecentre;
 
@@ -19,15 +18,19 @@ import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
+
 /**
  *
  * @author Mocha
  */
-public class AjouterCentre extends Form  {
-     Form current;
-     
-      public AjouterCentre(Resources res) {
+public class AjouterCentre extends Form {
+
+    Form current;
+
+    public AjouterCentre(Resources res) {
+        super("", BoxLayout.y());
 
         Toolbar tbar = new Toolbar(true);
         current = this;
@@ -36,55 +39,59 @@ public class AjouterCentre extends Form  {
         setTitle("Ajouter centre");
         getContentPane().setScrollVisible(false);
 
-         Label labelNom = new Label("nom centre :");
-        labelNom.setUIID("defaultLabel");
-         TextField tfNom = new TextField();
-        
-         Label labelAdresse = new Label("adresse centre :");
-        labelAdresse.setUIID("defaultLabel");
-        TextField tfAdresse = new TextField();
-       
+    
+        TextField nomcentre = new TextField("", " nom centre", 16, TextField.ANY);
+        nomcentre.setUIID("TextFieldBlack");
+        addStringValue("NOM", nomcentre);
 
-        Label labeltype = new Label("type : ");
-        labeltype.setUIID("defaultLabel");
-        TextArea tftype = new TextArea();
+        TextField adressecentre = new TextField("", " adresse centre", 16, TextField.ANY);
+        adressecentre.setUIID("TextFieldBlack");
+        addStringValue("ADRESSE", adressecentre);
 
-         Label labelville = new Label("ville : ");
-        labelville.setUIID("defaultLabel");
-        TextArea tfville = new TextArea();
-        
-        Label labelgouvernorat = new Label("gouvernorat : ");
-        labelgouvernorat.setUIID("defaultLabel");
-        TextArea tfgouvernorat = new TextArea();
-        
+        TextField prix = new TextField("", " prix", 16, TextField.ANY);
+        prix.setUIID("TextFieldBlack");
+        addStringValue("PRIX", prix);
+
+        TextField type = new TextField("", " type", 16, TextField.ANY);
+        type.setUIID("TextFieldBlack");
+        addStringValue("TYPE", type);
+
+        TextField ville = new TextField("", " ville", 16, TextField.ANY);
+        ville.setUIID("TextFieldBlack");
+        addStringValue("VILLE", ville);
+
+        TextField gouvernorat = new TextField("", " gouvernorat", 16, TextField.ANY);
+        gouvernorat.setUIID("TextFieldBlack");
+        addStringValue("GOUVERNORAT", gouvernorat);
+
+
+
         Button btnAdd = new Button("Ajouter");
-        addStringValue("",btnAdd);
-        
+        addStringValue("", btnAdd);
+
         //Onclick event
         btnAdd.addActionListener((e) -> {
             try {
-               
-                    InfiniteProgress ip = new InfiniteProgress();
-                    final Dialog Dialogs = ip.showInfiniteBlocking();
-                    centredecamping u = new centredecamping(
-                            String.valueOf(labelNom.getText().toString()).toString(),
-                            String.valueOf(labelAdresse.getText().toString()).toString(),
-                            String.valueOf(labeltype.getText().toString()).toString(),
-                            String.valueOf(labelville.getText().toString()).toString(),
-                            String.valueOf(labelgouvernorat.getText().toString()).toString());
-                            
 
-                            System.out.println("centre ajoutée est :"+ u);
+                InfiniteProgress ip = new InfiniteProgress();
+                final Dialog Dialogs = ip.showInfiniteBlocking();
+                centredecamping u = new centredecamping(
+                        String.valueOf(nomcentre.getText().toString()),
+                        String.valueOf(adressecentre.getText().toString()),
+                        Float.valueOf(prix.getText().toString()),
+                        String.valueOf(type.getText().toString()),
+                        String.valueOf(ville.getText().toString()),
+                        String.valueOf(gouvernorat.getText().toString()));
+
+                System.out.println("centre ajoutée est :" + u);
                 //appel fonction 
                 servicecentre.getInstance().addcentre(u);
                 Dialogs.dispose(); // nahi el loading
                 refreshTheme();//actualisation
-                
-                
-            
-            } catch(Exception ex){
+
+            } catch (Exception ex) {
                 ex.printStackTrace();
-                
+
             }
         });
 
@@ -93,6 +100,7 @@ public class AjouterCentre extends Form  {
     private void addStringValue(String s, Component c) {
         add(BorderLayout.west(new Label(s, "PaddedLabel"))
                 .add(BorderLayout.CENTER, c));
+        
 
     }
 }

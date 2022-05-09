@@ -13,6 +13,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.entities.centredecamping;
 import com.mycompany.utils.Statics;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,9 @@ import java.util.Map;
 public class servicecentre {
 
     public static servicecentre instance = null;
-
+    private boolean result;
     private ConnectionRequest req;
-    public int result;
+    public ArrayList<centredecamping> centres;
 
     public static servicecentre getInstance() {
         if (instance == null) {
@@ -38,10 +39,11 @@ public class servicecentre {
     public servicecentre() {
         req = new ConnectionRequest();
     }
-//ajouter Centre
 
+//Ajouter centre
     public void addcentre(centredecamping centre) {
-        String url = Statics.BASE_URL + "/addCentreDeCampingJSON?nomCentre=" + centre.getNomCentre()
+        String url = Statics.BASE_URL + "/addCentreDeCampingJSON?idcentre= centre.getIdCentre()"+
+                "nomcentre=" + centre.getNomCentre()
                 + "&adressecentre=" + centre.getAdresseCentre()
                 + "&prixcentre=" + centre.getPrixCentre()
                 + "&typecentre=" + centre.getTypeCentre()
@@ -57,79 +59,88 @@ public class servicecentre {
     }
 
     //affichage Centre
-    public ArrayList<centredecamping> affichagecentres() {
+    public ArrayList<centredecamping> parse(String jsonTxt) {
+        try {
+            centres = new ArrayList<>();
 
-        ArrayList<centredecamping> result = new ArrayList<>();
+            JSONParser parser = new JSONParser();
+           System.out.println("-----------json----------------------");
+            System.out.println(jsonTxt.toCharArray());
+
+            Map<String, Object> centreJSON;
+            centreJSON = parser.parseJSON(new CharArrayReader(jsonTxt.toCharArray()));
+            List<Map<String, Object>> listOfMaps;
+            listOfMaps = (List<Map<String, Object>>) centreJSON.get("root");
+            for (Map<String, Object> obj : listOfMaps) {
+                centredecamping centre = new centredecamping();
+                float idcentre = Float.parseFloat(obj.get("idcentre").toString());
+                String nomcentre = obj.get("nomcentre").toString();
+                String adressecentre = obj.get("adressecentre").toString();
+                Float prixcentre = Float.parseFloat(obj.get("prixcentre").toString());
+                String typecentre = obj.get("typecentre").toString();
+                String villecentre = obj.get("villecentre").toString();
+                String gouvernorat = obj.get("gouvernorat").toString();
+
+                centre.setIdCentre((int)idcentre);
+                centre.setNomCentre(nomcentre);
+                centre.setTypeCentre(typecentre);
+                centre.setAdresseCentre(adressecentre);
+                centre.setPrixCentre(prixcentre);
+                centre.setTypeCentre(typecentre);
+                centre.setVilleCentre(villecentre);
+                centre.setGouvernorat(gouvernorat);
+
+                centres.add(centre);
+
+            }
+        } catch (IOException | NumberFormatException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return centres;
+    }
+
+    public ArrayList<centredecamping> affichagecentres() {
+        req = new ConnectionRequest();
         String url = Statics.BASE_URL + "/listCentreDeCampingJSON";
+        System.out.println("===>" + url);
         req.setUrl(url);
+        req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                JSONParser jsonp;
-                jsonp = new JSONParser();
+               // System.out.println("hneeeeeeeeeeeeeeeeeeeeeeeee");
+                centres = parse(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return centres;
+    }
 
-                try {
-                    Map<String, Object> mapCentre = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));
-                    List<Map<String, Object>> listOfMaps = (List<Map<String, Object>>) mapCentre.get("root");
-                    for (Map<String, Object> obj : listOfMaps) {
-                        centredecamping centre = new centredecamping();
+    //delete centre
+    public boolean deletecentre(int id) {
 
-                        int idcentre = Integer.parseInt(obj.get("idcentre").toString());
-                        String nomcentre = obj.get("nomcentre").toString();
-                        String adressecentre = obj.get("adressecentre").toString();
-                        Float prixcentre = Float.parseFloat(obj.get("prixcentre").toString());
-                        String typecentre = obj.get("typecentre").toString();
-                        String villecentre = obj.get("villecentre").toString();
-                        String gouvernorat = obj.get("gouvernorat").toString();
-
-                        centre.setIdCentre(idcentre);
-                        centre.setNomCentre(nomcentre);
-                        centre.setTypeCentre(typecentre);
-                        centre.setAdresseCentre(adressecentre);
-                        centre.setPrixCentre(prixcentre);
-                        centre.setTypeCentre(typecentre);
-                        centre.setVilleCentre(villecentre);
-                        centre.setGouvernorat(gouvernorat);
-
-                        result.add(centre);
-
-                    }
-
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
+        String url = Statics.BASE_URL + "/DeleteCentreJSON/" + id;
+        System.out.println(url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.setFailSilently(true);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                result = req.getResponseCode() == 200;
+                req.removeResponseListener(this);
             }
 
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-
         return result;
 
-    }
-    //delete centre
-
-    public int deletecentre(centredecamping centre) {
-        req.setUrl(Statics.BASE_URL + "/DeleteCentreJSON/idCentre");
-        req.addArgument("idCentre", String.valueOf(centre.getIdCentre()));
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                result = req.getResponseCode();
-                req.removeResponseListener(this);
-
-            }
-        });
-        try {
-            NetworkManager.getInstance().addToQueueAndWait(req);
-        } catch (Exception e) {
-
-        }
-        return result;
     }
 //update centre
 
-    public int modifiercentre(centredecamping centre) {
+    public boolean modifiercentre(centredecamping centre) {
         req.setUrl(Statics.BASE_URL + "/updateCentreJSON/idCentre?nomcentre=" + centre.getNomCentre()
                 + "&adressecentre=" + centre.getAdresseCentre()
                 + "&prixcentre=" + centre.getPrixCentre()
@@ -139,14 +150,14 @@ public class servicecentre {
                 + "&adressecentre=" + centre.getAdresseCentre());
         req.addArgument("nomcentre", String.valueOf(centre.getNomCentre()));
         req.addArgument("adreesecentre", String.valueOf(centre.getAdresseCentre()));
-        req.addArgument("prixcentre",String.valueOf( centre.getPrixCentre()));
+        req.addArgument("prixcentre", String.valueOf(centre.getPrixCentre()));
         req.addArgument("typecentre", String.valueOf(centre.getTypeCentre()));
         req.addArgument("ville", String.valueOf(centre.getVilleCentre()));
         req.addArgument("gouvernorat", String.valueOf(centre.getGouvernorat()));
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                result = req.getResponseCode();
+                result = req.getResponseCode() == 200;
                 req.removeResponseListener(this);
 
             }
