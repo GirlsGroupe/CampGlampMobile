@@ -16,7 +16,6 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
-
 package com.mycompany.gui;
 
 import com.codename1.components.ScaleImageLabel;
@@ -50,14 +49,13 @@ public class BaseForm extends Form {
     public BaseForm(String title, Layout contentPaneLayout) {
         super(title, contentPaneLayout);
     }
-    
-    
+
     public Component createLineSeparator() {
         Label separator = new Label("", "WhiteSeparator");
         separator.setShowEvenIfBlank(true);
         return separator;
     }
-    
+
     public Component createLineSeparator(int color) {
         Label separator = new Label("", "WhiteSeparator");
         separator.getUnselectedStyle().setBgColor(color);
@@ -69,21 +67,29 @@ public class BaseForm extends Form {
     protected void addSideMenu(Resources res) {
         Toolbar tb = getToolbar();
         Image img = res.getImage("profile-background.jpg");
-        if(img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
+        if (img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
             img = img.scaledHeight(Display.getInstance().getDisplayHeight() / 3);
         }
         ScaleImageLabel sl = new ScaleImageLabel(img);
         sl.setUIID("BottomPad");
         sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-        
+
         tb.addComponentToSideMenu(LayeredLayout.encloseIn(
                 sl,
                 FlowLayout.encloseCenterBottom(
                         new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond"))
         ));
-        
-        tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
+        /*System.out.println(SessionManager.getRole().toString());
+        if(SessionManager.getRole().toString().equals("ROLE_camper") ||SessionManager.getRole().toString().equals("Guide") ){
+        tb.addMaterialCommandToSideMenu("Evenements", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
+        }else {*/
+        tb.addMaterialCommandToSideMenu("admin", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
+        tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
+        tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
+            tb.addMaterialCommandToSideMenu("Centre de camping", FontImage.MATERIAL_EXIT_TO_APP, e -> new Listecentre(res).show());
+            tb.addMaterialCommandToSideMenu("Voir la carte", FontImage.MATERIAL_EXIT_TO_APP, e -> new MapForm(res));
+
     }
 }

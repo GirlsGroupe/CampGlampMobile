@@ -12,14 +12,25 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.MultipartRequest;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.ui.ComboBox;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.TextField;
 import com.codename1.ui.events.*;
+import com.codename1.ui.util.Resources;
 import com.mycompany.entities.Utilisateurs;
+import com.mycompany.gui.ListeUtilisateurs;
+import com.mycompany.gui.ProfileForm;
+import com.mycompany.gui.ResetPwd;
+import com.mycompany.gui.SessionManager;
+import com.mycompany.gui.SignInForm;
+import com.mycompany.utils.CodeGenerator;
 import com.mycompany.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  *
@@ -48,7 +59,7 @@ public class servicesUtilisateurs {
 
     //affichage 
     public void ajoutUtilisateur(Utilisateurs utilisateur) {
-        String url = Statics.Base_URL + "/addUsersM?cinuser=" + utilisateur.getCinUser() + "&nomuser=" + utilisateur.getNomUser() + "&prenomuser=" + utilisateur.getPrenomUser() + "&teluser=" + utilisateur.getTelUser() + "&adresseuser=" + utilisateur.getAdresseUser() + "&email=" + utilisateur.getEmail() + "&motdepasse=" + utilisateur.getMotdepasse() + "&role=" + Arrays.toString(utilisateur.getRole()) + "&image=" + utilisateur.getImage();
+        String url = Statics.Base_URL + "/mobile/addUsersM?cinuser=" + utilisateur.getCinUser() + "&nomuser=" + utilisateur.getNomUser() + "&prenomuser=" + utilisateur.getPrenomUser() + "&teluser=" + utilisateur.getTelUser() + "&adresseuser=" + utilisateur.getAdresseUser() + "&email=" + utilisateur.getEmail() + "&motdepasse=" + utilisateur.getMotdepasse() + "&role=" + Arrays.toString(utilisateur.getRole()) + "&image=" + utilisateur.getImage();
         req.setUrl(url);
         req.addResponseListener((e) -> {
             String str = new String(req.getResponseData());
@@ -113,7 +124,7 @@ public class servicesUtilisateurs {
             JSONParser parser = new JSONParser();
             /*System.out.println("-----------json----------------------");
             System.out.println(jsonTxt.toCharArray());
-*/
+             */
             Map<String, Object> UsersJSON;
             UsersJSON = parser.parseJSON(new CharArrayReader(jsonTxt.toCharArray()));
             List<Map<String, Object>> listOfMaps;
@@ -150,13 +161,14 @@ public class servicesUtilisateurs {
 
     public ArrayList<Utilisateurs> afficherUtilisateurs() {
         req = new ConnectionRequest();
-        String url = Statics.Base_URL + "/listUsersM";
+        String url = Statics.Base_URL + "/mobile/listUsersM";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 Users = parse(new String(req.getResponseData()));
+                System.out.println(Users);
                 req.removeResponseListener(this);
             }
         });
@@ -167,7 +179,7 @@ public class servicesUtilisateurs {
 
     public boolean updateUser(Utilisateurs user, int id) {
         System.out.println("here");
-        String url = Statics.Base_URL + "/updateUsersM/"+id
+        String url = Statics.Base_URL + "/mobile/updateUsersM/" + id
                 + "?cinuser=" + user.getCinUser()
                 + "&nomuser=" + user.getNomUser()
                 + "&prenomuser=" + user.getPrenomUser()
@@ -175,9 +187,8 @@ public class servicesUtilisateurs {
                 + "&adresseuser=" + user.getAdresseUser()
                 + "&email=" + user.getEmail()
                 + "&motdepasse=" + user.getMotdepasse()
-                +"&image="+user.getImage();
+                + "&image=" + user.getImage();
 
-                
         req.setUrl(url);
         System.out.println(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -192,7 +203,7 @@ public class servicesUtilisateurs {
     }
 
     public boolean deleteUser(int id) {
-        String url = Statics.Base_URL + "/deleteUsersM/" + id;
+        String url = Statics.Base_URL + "/mobile/deleteUsersM/" + id;
         System.out.println(url);
         req.setUrl(url);
         req.setPost(false);
@@ -209,4 +220,161 @@ public class servicesUtilisateurs {
         return resultat;
 
     }
+
+    public void signup(TextField cinuser, TextField nomuser, TextField prenomuser, TextField teluser, TextField adresseuser, TextField email, TextField motdepasse, TextField Confirmermotdepasse, ComboBox vectorRoles, Resources res) {
+        //Role
+        String url = Statics.Base_URL + "/mobile/SignUpMobile"
+                + "?cinuser=" + cinuser.getText()
+                + "&nomuser=" + nomuser.getText()
+                + "&prenomuser=" + prenomuser.getText()
+                + "&teluser=" + teluser.getText()
+                + "&adresseuser=" + adresseuser.getText()
+                + "&email=" + email.getText()
+                + "&motdepasse=" + motdepasse.getText()
+                + "&roles=" + vectorRoles.getSelectedItem().toString();
+        req.setUrl(url);
+
+        //Control saisi
+        if (cinuser.getText().equals("") || nomuser.getText().equals("") || prenomuser.getText().equals("") || teluser.getText().equals("") || adresseuser.getText().equals("") || email.getText().equals("") || motdepasse.getText().equals("") || vectorRoles.getSelectedItem().toString().equals("")) {
+
+            Dialog.show("Erreur", "Veuillez remplir les champs", "OK", null);
+
+        } else if (!Confirmermotdepasse.getText().equals(motdepasse.getText())) {
+            Dialog.show("Erreur", "Les mots de passe ne sont pas identiques", "OK", null);
+
+        } //hethi wa9t tsir execution ta3 url 
+        else {
+            req.addResponseListener((e) -> {
+
+                //njib data ly7atithom fi form 
+                byte[] data = (byte[]) e.getMetaData();//lazm awl 7aja n7athrhom ke meta data ya3ni na5o id ta3 kol textField 
+                String responseData = new String(data);//ba3dika na5o content 
+
+                System.out.println("data ===>" + responseData);
+
+                JSONParser j = new JSONParser();
+                String json = new String(req.getResponseData()) + "";
+
+                try {
+
+                    if (json.equals("failed")) {
+                        Dialog.show("Echec", "Email déjà existe veuillez saisir de nouveau!!!", "OK", null);
+                    } else {
+                        Dialog.show("Succées", "Compte créer", "OK", null);
+                        new SignInForm(res).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+            );
+
+            //ba3d execution ta3 requete ely heya url nestanaw response ta3 server.
+            NetworkManager.getInstance().addToQueueAndWait(req);
+
+        }
+    }
+
+    public void signin(TextField email, TextField motdepasse, Resources rs) {
+
+        String url = Statics.Base_URL + "/mobile/SignIn?email=" + email.getText().toString() + "&motdepasse=" + motdepasse.getText().toString();
+        req = new ConnectionRequest(url, false); //false ya3ni url mazlt matba3thtich lel server
+        req.setUrl(url);
+        if (email.getText().equals("") || motdepasse.getText().equals("") || email.getText().equals("") && motdepasse.getText().equals("")) {
+
+            Dialog.show("Erreur", "Veuillez remplir les champs", "OK", null);
+
+        } else {
+            req.addResponseListener((NetworkEvent e) -> {
+
+                JSONParser j = new JSONParser();
+
+                String json = new String(req.getResponseData()) + "";
+
+                try {
+
+                    if (json.equals("failed")) {
+                        Dialog.show("Echec d'authentification", "Email ou mot de passe éronné", "OK", null);
+                    } else {
+                        System.out.println("data ==" + json);
+
+                        Map<String, Object> user = j.parseJSON(new CharArrayReader(json.toCharArray()));
+                        //Session 
+                        float id = Float.parseFloat(user.get("iduser").toString());
+                        SessionManager.setId((int) id);//jibt id ta3 user ly3ml login w sajltha fi session ta3i
+                        SessionManager.setPassowrd(user.get("motdepasse").toString());
+                        SessionManager.setNom(user.get("nomuser").toString());
+                        SessionManager.setPrenom(user.get("prenomuser").toString());
+                        SessionManager.setEmail(user.get("email").toString());
+                        //SessionManager.setRole((String[]) user.get("roles"));
+
+                        //photo 
+                        if (user.get("image") != null) {
+                            SessionManager.setPhoto(user.get("image").toString());
+                        }
+
+                        if (user.size() > 0) // l9a user
+                        {
+                            new ProfileForm(rs).show();
+//yemchi lel list reclamation
+                        }                   //new AjoutReclamationForm(rs).show();
+
+                    }
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+            });
+
+            //ba3d execution ta3 requete ely heya url nestanaw response ta3 server.
+            NetworkManager.getInstance().addToQueueAndWait(req);
+        }
+
+    }
+
+    public void ValiderCode(TextField code, Resources res) {
+        if (code.getText().isEmpty() == false && code.getText().equals(CodeGenerator.getCode())) {
+            Dialog.show("Succées", "Code valide", "OK", null);
+            new ResetPwd(res).show();
+
+        } else {
+            Dialog.show("Echéc", "Code invalide réssayer de nouveau", "OK", null);
+
+        }
+
+    }
+
+    public void ChangerMdp(String email, TextField motdepasse, TextField Confirmermotdepasse, Resources rs) {
+
+        String url = Statics.Base_URL + "/mobile/ChangermdpMobile/" + email + "?motdepasse=" + motdepasse.getText().toString();
+        req = new ConnectionRequest(url, false); //false ya3ni url mazlt matba3thtich lel server
+        req.setUrl(url);
+        if (motdepasse.getText().equals("") || Confirmermotdepasse.getText().equals("") || Confirmermotdepasse.getText().equals("") && motdepasse.getText().equals("")) {
+
+            Dialog.show("Erreur", "Veuillez remplir les champs", "OK", null);
+
+        } else if (motdepasse.getText().equals(Confirmermotdepasse.getText()) == false) {
+            Dialog.show("Erreur", "Les mots de passe ne sont pas identiques ! Veuillez remplir les champs", "OK", null);
+        } else {
+            req.addResponseListener((e) -> {
+
+                JSONParser j = new JSONParser();
+
+                String json = new String(req.getResponseData()) + "";
+
+                if (json.equals("Done")) {
+                    Dialog.show("Succées", "Mot de passe mis à jour", "OK", null);
+                    new SignInForm(rs).show();
+
+                }
+            });
+
+            //ba3d execution ta3 requete ely heya url nestanaw response ta3 server.
+            NetworkManager.getInstance().addToQueueAndWait(req);
+
+        }
+    }
+
 }

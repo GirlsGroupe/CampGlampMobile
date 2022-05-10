@@ -80,27 +80,21 @@ public class ProfileForm extends BaseForm {
                 )
         ));
 
-        TextField username = new TextField("sandeep");
+        TextField username = new TextField(SessionManager.getNom());
         username.setUIID("TextFieldBlack");
-        addStringValue("Username", username);
-
-        TextField email = new TextField("sandeep@gmail.com", "E-Mail", 20, TextField.EMAILADDR);
+        addStringValue("Nom", username);
+        TextField prenom = new TextField(SessionManager.getPrenom());
+        prenom.setUIID("TextFieldBlack");
+        addStringValue("Prenom", prenom);
+        TextField email = new TextField(SessionManager.getEmail(), "E-Mail", 20, TextField.EMAILADDR);
         email.setUIID("TextFieldBlack");
         addStringValue("E-Mail", email);
         
-        TextField password = new TextField("sandeep", "Password", 20, TextField.PASSWORD);
+        TextField password = new TextField(SessionManager.getPassowrd(), "Password", 20, TextField.PASSWORD);
         password.setUIID("TextFieldBlack");
         addStringValue("Password", password);
 
-        CheckBox cb1 = CheckBox.createToggle(res.getImage("on-off-off.png"));
-        cb1.setUIID("Label");
-        cb1.setPressedIcon(res.getImage("on-off-on.png"));
-        CheckBox cb2 = CheckBox.createToggle(res.getImage("on-off-off.png"));
-        cb2.setUIID("Label");
-        cb2.setPressedIcon(res.getImage("on-off-on.png"));
-        
-        addStringValue("Facebook", FlowLayout.encloseRightMiddle(cb1));
-        addStringValue("Twitter", FlowLayout.encloseRightMiddle(cb2));
+      
     }
     
     private void addStringValue(String s, Component v) {

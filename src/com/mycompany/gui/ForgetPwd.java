@@ -20,9 +20,12 @@
 package com.mycompany.gui;
 
 import com.codename1.components.FloatingHint;
+import com.codename1.components.InfiniteProgress;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
+import com.codename1.ui.Command;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
@@ -32,54 +35,66 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import com.mycompany.utils.SendEmail;
+
 
 /**
  * Account activation UI
  *
  * @author Shai Almog
  */
-public class ActivateForm extends BaseForm {
+public class ForgetPwd extends BaseForm {
+TextField email;
+public static String emailUser ;
 
-    public ActivateForm(Resources res) {
+    public ForgetPwd(Resources res) {
         super(new BorderLayout());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
-        tb.setUIID("Container");
+        tb.setUIID("ForgetPwd");
         getTitleArea().setUIID("Container");
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
-        setUIID("Activate");
+        setUIID("ForgetPwd");
         
         add(BorderLayout.NORTH, 
                 BoxLayout.encloseY(
-                        new Label(res.getImage("smily.png"), "LogoLabel"),
-                        new Label("Awsome Thanks!", "LogoLabel")
+                        new Label(res.getImage("forgot-password.png"), "LogoLabel"),
+                        new Label("Merci de saisir votre email !", "LogoLabel"),
+                        new Label("afin de recevoir votre code Thanks!", "LogoLabel")
                 )
         );
         
-        TextField code = new TextField("", "Enter Code", 20, TextField.PASSWORD);
-        code.setSingleLineTextArea(false);
-        
-        Button signUp = new Button("Sign Up");
-        Button resend = new Button("Resend");
-        resend.setUIID("CenterLink");
-        Label alreadHaveAnAccount = new Label("Already have an account?");
-        Button signIn = new Button("Sign In");
-        signIn.addActionListener(e -> previous.showBack());
-        signIn.setUIID("CenterLink");
-        
-        Container content = BoxLayout.encloseY(
-                new FloatingHint(code),
+        email = new TextField("", "Saisir votre email", 20, TextField.EMAILADDR);
+       email.setSingleLineTextArea(false);
+       Button Valider = new Button("valider");
+       Label haveanaccount=new Label("retour de connecter?");
+       Button SignIn = new Button("Renouveller votre mot de passe");
+       SignIn.addActionListener(e->previous.showBack());
+       SignIn.setUIID("CenterLink");
+          Container content = BoxLayout.encloseY(
+                new FloatingHint(email),
                 createLineSeparator(),
-                new SpanLabel("We've sent the confirmation code to your email. Please check your inbox", "CenterLabel"),
-                resend,
-                signUp,
-                FlowLayout.encloseCenter(alreadHaveAnAccount, signIn)
+                Valider,
+                FlowLayout.encloseCenter(haveanaccount), 
+                SignIn
         );
-        content.setScrollableY(true);
-        add(BorderLayout.SOUTH, content);
-        signUp.requestFocus();
-        signUp.addActionListener(e -> new NewsfeedForm(res).show());
-    }
+          content.setScrollableY(true);
+          add(BorderLayout.SOUTH, content);
+                  Valider.requestFocus();
+        Valider.addActionListener(e -> {
+            InfiniteProgress ip = new InfiniteProgress();
+            final Dialog ipDialog = ip.showInfiniteBlocking();
+            SendEmail.SendEmailMdp(email.getText());
+            emailUser=email.getText();
+            ipDialog.dispose();
+            Dialog.show("Mot de passe ","Nous avons envoyer le code a votre email. Veuillez verifier votre boite de reception",new Command("ok"));
+            new ConfirmerCode(res).show();
+
+            refreshTheme();
+        });
+}
+    
+    
     
 }
