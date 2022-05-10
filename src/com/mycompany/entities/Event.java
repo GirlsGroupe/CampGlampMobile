@@ -7,7 +7,7 @@ package com.mycompany.entities;
 
 /**
  *
- * @author louay
+ * @author ACER
  */
 public class Event {
 

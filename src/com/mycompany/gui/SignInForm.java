@@ -33,7 +33,7 @@ import com.codename1.ui.util.Resources;
 /**
  * Sign in UI
  *
- * @author Shai Almog
+ * @author ACER
  */
 public class SignInForm extends BaseForm {
 

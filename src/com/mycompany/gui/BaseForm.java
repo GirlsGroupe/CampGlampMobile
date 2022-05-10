@@ -35,7 +35,7 @@ import com.codename1.ui.util.Resources;
 /**
  * Base class for the forms with common functionality
  *
- * @author Shai Almog
+ * @author ACER
  */
 public class BaseForm extends Form {
 

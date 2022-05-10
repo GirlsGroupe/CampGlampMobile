@@ -35,7 +35,7 @@ import com.codename1.ui.util.Resources;
 /**
  * Signup UI
  *
- * @author Shai Almog
+ * @author ACER
  */
 public class SignUpForm extends BaseForm {
 

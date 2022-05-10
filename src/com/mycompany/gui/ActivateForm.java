@@ -36,7 +36,7 @@ import com.codename1.ui.util.Resources;
 /**
  * Account activation UI
  *
- * @author Shai Almog
+ * @author ACER
  */
 public class ActivateForm extends BaseForm {
 

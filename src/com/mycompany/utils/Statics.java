@@ -7,7 +7,7 @@ package com.mycompany.utils;
 
 /**
  *
- * @author louay
+ * @author ACER
  */
 public class Statics {
 
