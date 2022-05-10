@@ -72,7 +72,6 @@ public class UpdateUser extends BaseForm {
 
   
         if (servicesUtilisateurs.getInstance().updateUser(user, user.getIdUser())) {
-            System.out.println("hhh");
             new ListeUtilisateurs(res).show();
         }
       });

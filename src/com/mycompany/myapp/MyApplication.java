@@ -14,6 +14,7 @@ import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
 import com.mycompany.gui.AjouterUtilisateur;
+import com.mycompany.gui.ListProduits;
 import com.mycompany.gui.ListeUtilisateurs;
 import com.mycompany.gui.SignInForm;
 import com.mycompany.gui.SignUpForm;
@@ -55,7 +56,7 @@ public class MyApplication {
             current.show();
             return;
         }
-        new SignInForm(theme).show();
+        new ListProduits(theme).show();
     }
 
     public void stop() {

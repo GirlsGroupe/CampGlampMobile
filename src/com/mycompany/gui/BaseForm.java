@@ -88,8 +88,9 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("admin", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
-            tb.addMaterialCommandToSideMenu("Centre de camping", FontImage.MATERIAL_EXIT_TO_APP, e -> new Listecentre(res).show());
-            tb.addMaterialCommandToSideMenu("Voir la carte", FontImage.MATERIAL_EXIT_TO_APP, e -> new MapForm(res));
+        tb.addMaterialCommandToSideMenu("Centre de camping", FontImage.MATERIAL_EXIT_TO_APP, e -> new Listecentre(res).show());
+        tb.addMaterialCommandToSideMenu("Voir la carte", FontImage.MATERIAL_EXIT_TO_APP, e -> new MapForm(res));
+        tb.addMaterialCommandToSideMenu("Produit", FontImage.MATERIAL_EXIT_TO_APP, e -> new ListProduits(res).show());
 
     }
 }
