@@ -40,33 +40,7 @@ public class Listecentre extends BaseForm {
 
     Form current;
      Container cnt= new Container(BoxLayout.x());
-    // Container cx = new Container(BoxLayout.xCenter());
-
-
-    /*public Listecentre(Resources res) {
-        super("", BoxLayout.y()); //hesioste nen Newafeed w1 formulaire vertical
-        Toolbar tbar = new Toolbar(true);
-        current = this;
-        setToolbar(tbar);
-        getTitleArea().setUIID("Container");
-        setTitle("Liste des centres ");
-        getContentPane().setScrollVisible(false);
-
-        ArrayList<centredecamping> list = servicecentre.getInstance().affichagecentres();
-
-        for (centredecamping centre : list) {
-            addButton(centre.getIdCentre(),
-                    centre.getNomCentre(),
-                    centre.getAdresseCentre(),
-                    centre.getPrixCentre(),
-                    centre.getTypeCentre(),
-                    centre.getVilleCentre(),
-                    centre.getGouvernorat(),
-                    centre,res);
-
-        }
-
-    }*/
+  
     public Listecentre(Resources res) {
         getToolbar().setTitleComponent(
                 FlowLayout.encloseCenterMiddle(
@@ -127,10 +101,20 @@ public class Listecentre extends BaseForm {
             }
         });
         
-
-    Container cnt = new Container(new BorderLayout()).add(BorderLayout.CENTER, BoxLayout.encloseY(BoxLayout.encloseX(Name, Deletc)));
-
-        add(cnt);
+        
+         Label UpdateU = new Label(" ");
+        UpdateU.setUIID("NewsTopLine");
+        Style modifierStyle = new Style(UpdateU.getUnselectedStyle());
+        modifierStyle.setFgColor(0xf7ad02);
+        FontImage mFontImage = FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT, modifierStyle);
+        UpdateU.setIcon(mFontImage);
+        UpdateU.setTextPosition(LEFT);
+        UpdateU.addPointerPressedListener(l -> {
+            new modifiercentre(res, centre).show();
+            
+        });
+            Container cnt = new Container(new BorderLayout()).add(BorderLayout.CENTER, BoxLayout.encloseY(BoxLayout.encloseX(Name, Deletc,UpdateU)));
+      add(cnt);
 }
 }
 

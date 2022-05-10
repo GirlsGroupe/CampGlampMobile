@@ -42,8 +42,8 @@ public class servicecentre {
 
 //Ajouter centre
     public void addcentre(centredecamping centre) {
-        String url = Statics.BASE_URL + "/addCentreDeCampingJSON?idcentre= centre.getIdCentre()"+
-                "nomcentre=" + centre.getNomCentre()
+        String url = Statics.BASE_URL + "/addCentreDeCampingJSON?idcentre= centre.getIdCentre()"
+                + "nomcentre=" + centre.getNomCentre()
                 + "&adressecentre=" + centre.getAdresseCentre()
                 + "&prixcentre=" + centre.getPrixCentre()
                 + "&typecentre=" + centre.getTypeCentre()
@@ -64,7 +64,7 @@ public class servicecentre {
             centres = new ArrayList<>();
 
             JSONParser parser = new JSONParser();
-           System.out.println("-----------json----------------------");
+            System.out.println("-----------json----------------------");
             System.out.println(jsonTxt.toCharArray());
 
             Map<String, Object> centreJSON;
@@ -81,7 +81,7 @@ public class servicecentre {
                 String villecentre = obj.get("villecentre").toString();
                 String gouvernorat = obj.get("gouvernorat").toString();
 
-                centre.setIdCentre((int)idcentre);
+                centre.setIdCentre((int) idcentre);
                 centre.setNomCentre(nomcentre);
                 centre.setTypeCentre(typecentre);
                 centre.setAdresseCentre(adressecentre);
@@ -109,7 +109,7 @@ public class servicecentre {
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-               // System.out.println("hneeeeeeeeeeeeeeeeeeeeeeeee");
+                // System.out.println("hneeeeeeeeeeeeeeeeeeeeeeeee");
                 centres = parse(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
@@ -140,20 +140,17 @@ public class servicecentre {
     }
 //update centre
 
-    public boolean modifiercentre(centredecamping centre) {
-        req.setUrl(Statics.BASE_URL + "/updateCentreJSON/idCentre?nomcentre=" + centre.getNomCentre()
+    public boolean modifiercentre(centredecamping centre, int idcentre) {
+        String url = Statics.BASE_URL + "/updateCentreJSON/" + idcentre
+                + "?nomcentre=" + centre.getNomCentre()
                 + "&adressecentre=" + centre.getAdresseCentre()
                 + "&prixcentre=" + centre.getPrixCentre()
                 + "&typecentre=" + centre.getTypeCentre()
                 + "&villecentre=" + centre.getVilleCentre()
                 + "&gouvernorat=" + centre.getGouvernorat()
-                + "&adressecentre=" + centre.getAdresseCentre());
-        req.addArgument("nomcentre", String.valueOf(centre.getNomCentre()));
-        req.addArgument("adreesecentre", String.valueOf(centre.getAdresseCentre()));
-        req.addArgument("prixcentre", String.valueOf(centre.getPrixCentre()));
-        req.addArgument("typecentre", String.valueOf(centre.getTypeCentre()));
-        req.addArgument("ville", String.valueOf(centre.getVilleCentre()));
-        req.addArgument("gouvernorat", String.valueOf(centre.getGouvernorat()));
+                + "&adressecentre=" + centre.getAdresseCentre();
+        req.setUrl(url);
+        System.out.println(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -162,11 +159,7 @@ public class servicecentre {
 
             }
         });
-        try {
-            NetworkManager.getInstance().addToQueueAndWait(req);
-        } catch (Exception e) {
-
-        }
+         NetworkManager.getInstance().addToQueueAndWait(req);
         return result;
     }
 
