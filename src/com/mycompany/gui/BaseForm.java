@@ -91,6 +91,7 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Centre de camping", FontImage.MATERIAL_EXIT_TO_APP, e -> new Listecentre(res).show());
         tb.addMaterialCommandToSideMenu("Voir la carte", FontImage.MATERIAL_EXIT_TO_APP, e -> new MapForm(res));
         tb.addMaterialCommandToSideMenu("Produit", FontImage.MATERIAL_EXIT_TO_APP, e -> new ListProduits(res).show());
+        tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new ShowEvent(res).show());
 
     }
 }
