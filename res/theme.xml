@@ -20,12 +20,12 @@
     <image name="Button.sel#borderTop_1.png" type="multi"  />
     <image name="Button.sel#borderTopL_1.png" type="multi"  />
     <image name="Button.sel#borderTopR_1.png" type="multi"  />
+    <image name="clamp.png"  />
     <image name="confirmation-background.jpg"  />
     <image name="dog.jpg"  />
     <image name="email.png"  />
     <image name="facebook-logo.png" type="multi"  />
     <image name="forgot-password.png"  />
-    <image name="Logo.png" type="multi"  />
     <image name="news-item-1.jpg"  />
     <image name="news-item-2.jpg"  />
     <image name="news-item-3.jpg"  />
@@ -35,6 +35,7 @@
     <image name="news-tab-down.png" type="multi"  />
     <image name="on-off-off.png" type="multi"  />
     <image name="on-off-on.png" type="multi"  />
+    <image name="password (1).png"  />
     <image name="profile-background.jpg"  />
     <image name="profile-pic.jpg"  />
     <image name="signin-background.jpg"  />

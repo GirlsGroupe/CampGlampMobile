@@ -29,11 +29,11 @@ public class ResetPwd  extends BaseForm {
         super(new BorderLayout());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
-        tb.setUIID("ResetPwd");
+        tb.setUIID("ForgetPwd");
         getTitleArea().setUIID("Container");
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
-        //setUIID("");
+        setUIID("ForgetPwd");
         
   
         

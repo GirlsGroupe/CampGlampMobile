@@ -40,7 +40,6 @@ public class servicesUtilisateurs {
 
     public ArrayList<Utilisateurs> Users;
     private boolean resultat;
-
     public static servicesUtilisateurs instance = null;
 
     private ConnectionRequest req;
@@ -257,7 +256,7 @@ public class servicesUtilisateurs {
 
                 try {
 
-                    if (json.equals("failed")) {
+                    if (json.equals("Failed")) {
                         Dialog.show("Echec", "Email déjà existe veuillez saisir de nouveau!!!", "OK", null);
                     } else {
                         Dialog.show("Succées", "Compte créer", "OK", null);
@@ -303,12 +302,14 @@ public class servicesUtilisateurs {
                         //Session 
                         float id = Float.parseFloat(user.get("iduser").toString());
                         SessionManager.setId((int) id);//jibt id ta3 user ly3ml login w sajltha fi session ta3i
-                        SessionManager.setPassowrd(user.get("motdepasse").toString());
                         SessionManager.setNom(user.get("nomuser").toString());
                         SessionManager.setPrenom(user.get("prenomuser").toString());
                         SessionManager.setEmail(user.get("email").toString());
-                        //SessionManager.setRole((String[]) user.get("roles"));
-
+                        //System.out.println(user.get("roles").toString());
+                          String roleUser = user.get("roles").toString();
+                        System.out.println(roleUser);
+                          SessionManager.setRole(roleUser);
+                  
                         //photo 
                         if (user.get("image") != null) {
                             SessionManager.setPhoto(user.get("image").toString());
@@ -317,11 +318,9 @@ public class servicesUtilisateurs {
                         if (user.size() > 0) // l9a user
                         {
                             new ProfileForm(rs).show();
-//yemchi lel list reclamation
-                        }                   //new AjoutReclamationForm(rs).show();
-
+                        }
                     }
-
+                    
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

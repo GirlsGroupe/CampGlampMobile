@@ -20,13 +20,16 @@
 package com.mycompany.gui;
 
 import com.codename1.components.ScaleImageLabel;
+import com.codename1.ui.Button;
 import com.codename1.ui.CheckBox;
 import com.codename1.ui.Component;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -43,7 +46,6 @@ import com.codename1.ui.util.Resources;
 public class ProfileForm extends BaseForm {
 
     public ProfileForm(Resources res) {
-        super("Newsfeed", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
@@ -53,12 +55,21 @@ public class ProfileForm extends BaseForm {
         super.addSideMenu(res);
         
         tb.addSearchCommand(e -> {});
-        
+                String urlImage = "http://127.0.0.1:8000/uploads/ProfileImage/" + SessionManager.getPhoto();
+
         
         Image img = res.getImage("profile-background.jpg");
         if(img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
             img = img.scaledHeight(Display.getInstance().getDisplayHeight() / 3);
         }
+        int size = Display.getInstance().convertToPixels(1);
+
+        Image placeHolder = Image.createImage(size, size,0);
+        EncodedImage enc = EncodedImage.createFromImage(placeHolder, true);
+        URLImage urlim = URLImage.createToStorage(enc, urlImage, urlImage, URLImage.RESIZE_SCALE);
+        int height = Display.getInstance().convertToPixels(11.5f);
+        int width = Display.getInstance().convertToPixels(15f);
+        Button Image = new Button(urlim.fill(width, height));
         ScaleImageLabel sl = new ScaleImageLabel(img);
         sl.setUIID("BottomPad");
         sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
@@ -74,25 +85,21 @@ public class ProfileForm extends BaseForm {
                     GridLayout.encloseIn(3, 
                             facebook,
                             FlowLayout.encloseCenter(
-                                new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond")),
+                                 Image),
                             twitter
                     )
                 )
         ));
-
-        TextField username = new TextField(SessionManager.getNom());
+        TextField username = new TextField(SessionManager.getNom(), "",20,TextField.ANY);
         username.setUIID("TextFieldBlack");
         addStringValue("Nom", username);
-        TextField prenom = new TextField(SessionManager.getPrenom());
+        TextField prenom = new TextField(SessionManager.getPrenom(), "Prenom",20, TextField.ANY);
         prenom.setUIID("TextFieldBlack");
         addStringValue("Prenom", prenom);
         TextField email = new TextField(SessionManager.getEmail(), "E-Mail", 20, TextField.EMAILADDR);
         email.setUIID("TextFieldBlack");
         addStringValue("E-Mail", email);
         
-        TextField password = new TextField(SessionManager.getPassowrd(), "Password", 20, TextField.PASSWORD);
-        password.setUIID("TextFieldBlack");
-        addStringValue("Password", password);
 
       
     }

@@ -16,6 +16,8 @@ import com.codename1.io.NetworkEvent;
 import com.mycompany.gui.AjouterUtilisateur;
 import com.mycompany.gui.ListProduits;
 import com.mycompany.gui.ListeUtilisateurs;
+import com.mycompany.gui.ProfileForm;
+import com.mycompany.gui.SessionManager;
 import com.mycompany.gui.SignInForm;
 import com.mycompany.gui.SignUpForm;
 
@@ -56,9 +58,14 @@ public class MyApplication {
             current.show();
             return;
         }
+        if(SessionManager.getRole()== null){
         new SignInForm(theme).show();
     }
+    else {
+            new ProfileForm(theme).show();
 
+}
+    }
     public void stop() {
         current = getCurrentForm();
         if(current instanceof Dialog) {

@@ -36,7 +36,7 @@ public class ConfirmerCode extends BaseForm{
         getTitleArea().setUIID("Container");
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
-        //setUIID("");
+        setUIID("ForgetPwd");
         
         add(BorderLayout.NORTH, 
                 BoxLayout.encloseY(

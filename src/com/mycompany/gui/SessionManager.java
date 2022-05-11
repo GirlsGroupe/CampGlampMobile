@@ -20,9 +20,25 @@ public class SessionManager {
     private static String nom;
     private static String prenom;
     private static String email;
-    private static String passowrd;
+    private static String cin;
+    private static String tel;
+
+
+
+    public static void setCin(String cin) {
+        SessionManager.cin = cin;
+    }
+
+    public static String getTel() {
+        return tel;
+    }
+
+    public static void setTel(String tel) {
+        SessionManager.tel = tel;
+    }
     private static String photo;
-    private static String[] role;
+    private static String role;
+    
 
    
 
@@ -45,48 +61,47 @@ public class SessionManager {
         pref.set("id", id);//nsajl id user connecté  w na3tiha identifiant "id";
     }
 
-    public static void setRole(String[] role) {
-        SessionManager.role = role;
-    }
+  
     
-     public static String[] getRole() {
-        return role;
-    }
+
 
     public static String getEmail() {
         return pref.get("email", email);
+    }
+
+       public static String getRole() {
+        return pref.get("role", role);
+    }
+         public static void setRole(String role) {
+        pref.set("role", role);
     }
 
     public static void setEmail(String email) {
         pref.set("email", email);
     }
 
-    public static String getPassowrd() {
-        return pref.get("passowrd", passowrd);
-    }
 
-    public static void setPassowrd(String passowrd) {
-        pref.set("passowrd", passowrd);
-    }
 
     public static String getPhoto() {
         return pref.get("photo", photo);
     }
 
     public static String getNom() {
-        return nom;
+          return pref.get("nom", nom);
     }
 
     public static String getPrenom() {
-        return prenom;
+             return   pref.get("prenom", prenom);
     }
 
     public static void setNom(String nom) {
-        SessionManager.nom = nom;
+                pref.set("nom", nom);
+
     }
 
     public static void setPrenom(String prenom) {
-        SessionManager.prenom = prenom;
+       pref.set("prenom", prenom);
+
     }
     
 

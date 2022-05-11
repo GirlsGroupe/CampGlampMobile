@@ -59,7 +59,6 @@ public class ListeUtilisateurs extends BaseForm {
 
     private void addButton(String image, String nomUser, Utilisateurs user, Resources res) {
         String urlImage = "http://127.0.0.1:8000/uploads/ProfileImage/" + image;
-        System.out.println(urlImage);
 
         Image placeHolder = Image.createImage(90, 90);
         EncodedImage enc = EncodedImage.createFromImage(placeHolder, true);

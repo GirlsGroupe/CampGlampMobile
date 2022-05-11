@@ -19,13 +19,17 @@
 package com.mycompany.gui;
 
 import com.codename1.components.ScaleImageLabel;
+import com.codename1.io.Storage;
+import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
@@ -65,6 +69,15 @@ public class BaseForm extends Form {
     }
 
     protected void addSideMenu(Resources res) {
+        String urlImage = "http://127.0.0.1:8000/uploads/ProfileImage/" + SessionManager.getPhoto();
+        int size = Display.getInstance().convertToPixels(1);
+
+        Image placeHolder = Image.createImage(size, size,0);
+        EncodedImage enc = EncodedImage.createFromImage(placeHolder, true);
+        URLImage urlim = URLImage.createToStorage(enc, urlImage, urlImage, URLImage.RESIZE_SCALE);
+        int height = Display.getInstance().convertToPixels(11.5f);
+        int width = Display.getInstance().convertToPixels(15f);
+        Button Image = new Button(urlim.fill(width, height));
         Toolbar tb = getToolbar();
         Image img = res.getImage("profile-background.jpg");
         if (img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
@@ -77,21 +90,40 @@ public class BaseForm extends Form {
         tb.addComponentToSideMenu(LayeredLayout.encloseIn(
                 sl,
                 FlowLayout.encloseCenterBottom(
-                        new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond"))
+                        Image)
         ));
-        /*System.out.println(SessionManager.getRole().toString());
-        if(SessionManager.getRole().toString().equals("ROLE_camper") ||SessionManager.getRole().toString().equals("Guide") ){
-        tb.addMaterialCommandToSideMenu("Evenements", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
-        tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
-        tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
-        }else {*/
-        tb.addMaterialCommandToSideMenu("admin", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
-        tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
-        tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
-        tb.addMaterialCommandToSideMenu("Centre de camping", FontImage.MATERIAL_EXIT_TO_APP, e -> new Listecentre(res).show());
-        tb.addMaterialCommandToSideMenu("Voir la carte", FontImage.MATERIAL_EXIT_TO_APP, e -> new MapForm(res));
-        tb.addMaterialCommandToSideMenu("Produit", FontImage.MATERIAL_EXIT_TO_APP, e -> new ListProduits(res).show());
-        tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new ShowEvent(res).show());
+        if (SessionManager.getRole().equals("[ROLE_admin]")) {
+            tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
+            tb.addMaterialCommandToSideMenu("Centre de camping", FontImage.MATERIAL_UPDATE, e -> new Listecentre(res).show());
+            tb.addMaterialCommandToSideMenu("Voir la carte", FontImage.MATERIAL_UPDATE, e -> new MapForm(res));
+            tb.addMaterialCommandToSideMenu("Produit", FontImage.MATERIAL_UPDATE, e -> new ListProduits(res).show());
+            tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_UPDATE, e -> new ShowEvent(res).show());
+            tb.addMaterialCommandToSideMenu("Reclamation", FontImage.MATERIAL_UPDATE, e -> new ShowAllReclamation(this).show());
+            tb.addMaterialCommandToSideMenu("Commentaire", FontImage.MATERIAL_UPDATE, e -> new ShowAllComment(this).show());
+            tb.addMaterialCommandToSideMenu("Avis", FontImage.MATERIAL_UPDATE, e -> new ShowAllAvis(this).show());
+            tb.addMaterialCommandToSideMenu("Réservation", FontImage.MATERIAL_UPDATE, e -> new ListReservation(res).show());
+            tb.addMaterialCommandToSideMenu("Utilisateurs", FontImage.MATERIAL_UPDATE, e -> new ListeUtilisateurs(res).show());
+
+            tb.addMaterialCommandToSideMenu("Déconnexion", FontImage.MATERIAL_EXIT_TO_APP, e -> {
+                new SignInForm(res).show();
+                SessionManager.pref.clearAll();
+                Storage.getInstance().clearStorage();
+                Storage.getInstance().clearCache();
+            }
+            );
+            refreshTheme();
+        } else {
+            tb.addMaterialCommandToSideMenu("Evenements", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
+            tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
+            tb.addMaterialCommandToSideMenu("Déconnexion", FontImage.MATERIAL_EXIT_TO_APP, e -> {
+                new SignInForm(res).show();
+                SessionManager.pref.clearAll();
+                Storage.getInstance().clearStorage();
+                Storage.getInstance().clearCache();
+            }
+            );
+            refreshTheme();
+        }
 
     }
 }
