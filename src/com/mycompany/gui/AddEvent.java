@@ -72,7 +72,7 @@ public class AddEvent extends BaseForm {
     }
 
     public AddEvent(Resources res) {
-        super("Newsfeed", BoxLayout.y());
+        super("", BoxLayout.y());
 
         Toolbar tb = new Toolbar(true);
         current = this;
@@ -92,7 +92,7 @@ public class AddEvent extends BaseForm {
         Label s1 = new Label();
         Label s2 = new Label();
 
-        addTab(swipe, s1, res.getImage("Logo.png"), "", "", res);
+        addTab(swipe, s1, res.getImage("Wall.jpg"), "", "", res);
 
         //
         swipe.setUIID("Container");

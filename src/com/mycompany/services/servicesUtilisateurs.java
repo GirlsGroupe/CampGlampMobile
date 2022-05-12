@@ -178,7 +178,7 @@ public class servicesUtilisateurs {
 
     public boolean updateUser(Utilisateurs user, int id) {
         System.out.println("here");
-        String url = Statics.Base_URL + "/mobile/updateUsersM/" + id
+        String url = Statics.Base_URL + "/mobile/updateUsersM/"+id
                 + "?cinuser=" + user.getCinUser()
                 + "&nomuser=" + user.getNomUser()
                 + "&prenomuser=" + user.getPrenomUser()
@@ -253,7 +253,6 @@ public class servicesUtilisateurs {
 
                 JSONParser j = new JSONParser();
                 String json = new String(req.getResponseData()) + "";
-
                 try {
 
                     if (json.equals("Failed")) {

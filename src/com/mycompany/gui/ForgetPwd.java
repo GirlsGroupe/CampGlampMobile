@@ -68,15 +68,13 @@ public static String emailUser ;
         email = new TextField("", "Saisir votre email", 20, TextField.EMAILADDR);
        email.setSingleLineTextArea(false);
        Button Valider = new Button("valider");
-       Label haveanaccount=new Label("retour de connecter?");
-       Button SignIn = new Button("Renouveller votre mot de passe");
+       Button SignIn = new Button("");
        SignIn.addActionListener(e->previous.showBack());
        SignIn.setUIID("CenterLink");
           Container content = BoxLayout.encloseY(
                 new FloatingHint(email),
                 createLineSeparator(),
                 Valider,
-                FlowLayout.encloseCenter(haveanaccount), 
                 SignIn
         );
           content.setScrollableY(true);

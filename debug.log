@@ -1,2 +1,111 @@
 [0510/230811.919:INFO:CONSOLE(66)] "You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started", source: https://maps.googleapis.com/maps/api/js?key=AIzaSyCy-fMWerzvXcPCV0FDI07hW2DAzs_mnpY&callback=initMap (66)
 [0510/230819.724:INFO:CONSOLE(22)] "Here I am !!!", source: https://cn1app/streams/1 (22)
+[0511/065109.375:ERROR:broker_win.cc(55)] Error reading broker pipe: Le canal de communication a été fermé. (0x6D)
+[0511/065109.378:ERROR:broker_win.cc(55)] Error reading broker pipe: Le canal de communication a été fermé. (0x6D)
+[0511/092847.404:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092848.296:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092852.412:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092853.304:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092857.420:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092858.316:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092900.809:INFO:CONSOLE(22)] "Here I am !!!", source: https://cn1app/streams/1 (22)
+[0511/092902.426:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092903.326:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092907.442:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092908.341:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092912.448:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/092913.356:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/093820.941:INFO:CONSOLE(22)] "Here I am !!!", source: https://cn1app/streams/1 (22)
+[0511/094042.675:INFO:CONSOLE(66)] "You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started", source: https://maps.googleapis.com/maps/api/js?key=AIzaSyCy-fMWerzvXcPCV0FDI07hW2DAzs_mnpY&callback=initMap (66)
+[0511/094047.858:INFO:CONSOLE(22)] "Here I am !!!", source: https://cn1app/streams/1 (22)
+[0511/094320.211:INFO:CONSOLE(66)] "You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started", source: https://maps.googleapis.com/maps/api/js?key=AIzaSyCy-fMWerzvXcPCV0FDI07hW2DAzs_mnpY&callback=initMap (66)
+[0511/094325.692:INFO:CONSOLE(22)] "Here I am !!!", source: https://cn1app/streams/1 (22)
+[0511/094926.431:INFO:CONSOLE(66)] "You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started", source: https://maps.googleapis.com/maps/api/js?key=AIzaSyCy-fMWerzvXcPCV0FDI07hW2DAzs_mnpY&callback=initMap (66)
+[0511/094932.393:INFO:CONSOLE(22)] "Here I am !!!", source: https://cn1app/streams/1 (22)
+[0511/103121.914:INFO:CONSOLE(66)] "You must enable Billing on the Google Cloud Project at https://console.cloud.google.com/project/_/billing/enable Learn more at https://developers.google.com/maps/gmp-get-started", source: https://maps.googleapis.com/maps/api/js?key=AIzaSyCy-fMWerzvXcPCV0FDI07hW2DAzs_mnpY&callback=initMap (66)
+[0511/103130.878:INFO:CONSOLE(22)] "Here I am !!!", source: https://cn1app/streams/1 (22)
+[0511/103318.176:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103318.182:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103323.191:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103323.191:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103328.209:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103328.209:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103333.213:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103333.213:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103338.222:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103338.222:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103422.515:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103423.403:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103423.403:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103423.452:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103423.452:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103425.604:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103425.663:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103427.532:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103428.407:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103428.415:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103428.472:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103428.472:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103430.621:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103430.669:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103432.540:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103433.422:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103433.422:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103433.487:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103433.487:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103435.638:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103435.679:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103437.551:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103438.443:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103438.443:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103438.507:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103438.507:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103440.656:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103440.688:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103442.567:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103443.452:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103443.452:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103443.516:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103443.516:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103445.664:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103445.704:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103447.579:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103448.458:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103448.466:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103448.522:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103448.522:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103450.675:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103450.718:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103452.597:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103453.474:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103453.474:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103453.530:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103453.530:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103455.693:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103455.726:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103457.610:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103458.480:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103458.488:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103458.544:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103458.544:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103500.699:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103500.740:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103502.621:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103503.497:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103503.497:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103503.561:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103503.561:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103505.712:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103505.752:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103507.639:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103508.512:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103508.512:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103508.568:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103508.568:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103510.726:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103510.758:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103512.645:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103513.520:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103513.520:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103513.578:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.
+[0511/103513.578:WARNING:dns_config_service_win.cc(700)] Failed to read DnsConfig.

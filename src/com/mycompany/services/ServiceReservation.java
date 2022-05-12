@@ -42,7 +42,7 @@ public class ServiceReservation {
     }
     
     public void addReservation(Resevation resevation){
-        String url = Statics.Base_URL+"/addRes/idreservation?etat="+resevation.getEtat()+"&datereservation="+resevation.getDatereservation()+
+        String url = Statics.Base_URL+"/addRes?etat="+resevation.getEtat()+"&datereservation="+resevation.getDatereservation()+
                 "&id="+resevation.getId()+"&iduser="+resevation.getIduser();
         req.setUrl(url);
         req.addResponseListener((e)-> {

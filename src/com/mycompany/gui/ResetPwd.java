@@ -34,7 +34,12 @@ public class ResetPwd  extends BaseForm {
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
         setUIID("ForgetPwd");
-        
+ add(BorderLayout.NORTH, 
+                BoxLayout.encloseY(
+                        new Label(res.getImage("password(1).png"), "LogoLabel"),
+                        new Label("Merci de saisir Le nouveau mot de passe reçu !", "LogoLabel")
+                )
+        );        
   
         
         TextField mdp = new TextField("", "Saisir mdp", 20, TextField.PASSWORD);

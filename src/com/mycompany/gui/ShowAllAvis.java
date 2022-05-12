@@ -10,7 +10,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class ShowAllAvis extends Form {
+public class ShowAllAvis extends BaseForm {
 
     public static Aviscamp currentAviscamp = null;
     Form previous;

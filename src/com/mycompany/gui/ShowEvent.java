@@ -1,3 +1,5 @@
+
+   
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -50,7 +52,6 @@ public class ShowEvent extends BaseForm {
     Form current;
 
     public ShowEvent(Resources res) {
-        super("Newsfeed", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         current = this;
         setToolbar(tb);
@@ -60,16 +61,14 @@ public class ShowEvent extends BaseForm {
 
         super.addSideMenu(res);
 
-        tb.addSearchCommand(e -> {
-
-        });
+      
 
         Tabs swipe = new Tabs();
 
         Label s1 = new Label();
         Label s2 = new Label();
 
-        addTab(swipe, s1, res.getImage("Logo.png"), "", "", res);
+        addTab(swipe, s1, res.getImage("Wall.jpg"), "", "", res);
 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
