@@ -149,7 +149,7 @@ public class AddReservation extends BaseForm {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
 
-          TextField etat = new TextField("", " etat", 16, TextField.ANY);
+        TextField etat = new TextField("", " etat", 16, TextField.ANY);
         etat.setUIID("TextFieldBlack");
         addStringValue("Etat", etat);
         
@@ -158,39 +158,33 @@ public class AddReservation extends BaseForm {
         Picker datePicker = new Picker();
         datePicker.setType(Display.PICKER_TYPE_DATE);
         addStringValue("datePicker", datePicker);       
-        TextField id = new TextField("", "id", 16, TextField.ANY);
-        id.setUIID("TextFieldBlack");
-        addStringValue("Evenement", id);
-       
-        TextField iduser = new TextField("", " iduser", 16, TextField.ANY);
-        iduser.setUIID("TextFieldBlack");
-        addStringValue("Utilisateur", iduser);
 
         Button btnAdd = new Button("Ajouter");
         addStringValue("",btnAdd);
         
         //Onclick event
         btnAdd.addActionListener((ActionEvent e) -> {
-            try {
-               
+           try {
+                if (etat.getText() == "") {
+                    Dialog.show("Verify your data", "", "cancel", "ok");
+                } else {
                     InfiniteProgress ip = new InfiniteProgress();
-                    final Dialog Dialogs = ip.showInfiniteBlocking();
+                    final Dialog iDialog = ip.showInfiniteBlocking();
                     SimpleDateFormat format = new SimpleDateFormat ("yyyy-mm-dd");
                     Resevation r = new Resevation(
                             String.valueOf(etat.getText()).toString(),
-                            format.format (datePicker.getDate()),
-                            Integer.valueOf(id.getText()),
-                            Integer.valueOf(iduser.getText()));
+                            format.format (datePicker.getDate()));
                             System.out.println("reservation ajoutée est :"+ r);
                 //appel fonction 
-                ServiceReservation.getInstance().addReservation(r);
-                 Dialogs.dispose(); // nahi el loading
-                new ListReservation(res).show();
-                refreshTheme();//actualisation//actualisation
-            } catch(Exception ex){
+                ServiceReservation.getInstance().addReservation(etat, datereservation);
+                iDialog.dispose();
+                    new ListReservation(res).show();
+                    refreshTheme();
+                }
+            } catch (Exception ex) {
                 ex.printStackTrace();
-                    }
-                });
+            }
+        });
             }
 
     private void addStringValue(String s, Component c) {

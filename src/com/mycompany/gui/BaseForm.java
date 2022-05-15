@@ -92,7 +92,7 @@ public class BaseForm extends Form {
                 FlowLayout.encloseCenterBottom(
                         Image)
         ));
-        if (SessionManager.getRole().equals("[ROLE_admin]")) {
+        if (SessionManager.getRole().equals("[ROLE_admin]") ) {
             tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
             tb.addMaterialCommandToSideMenu("Centre de camping", FontImage.MATERIAL_UPDATE, e -> new Listecentre(res).show());
             tb.addMaterialCommandToSideMenu("Voir la carte", FontImage.MATERIAL_UPDATE, e -> new MapForm(res));
@@ -112,8 +112,8 @@ public class BaseForm extends Form {
             }
             );
             refreshTheme();
-        } else {
-            tb.addMaterialCommandToSideMenu("Evenements", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
+        } else if (SessionManager.getRole().equals("[ROLE_guide]") ) {
+            tb.addMaterialCommandToSideMenu("Publications", FontImage.MATERIAL_UPDATE, e -> new ListePublications(res).show());
             tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
             tb.addMaterialCommandToSideMenu("Déconnexion", FontImage.MATERIAL_EXIT_TO_APP, e -> {
                 new SignInForm(res).show();
@@ -123,6 +123,9 @@ public class BaseForm extends Form {
             }
             );
             refreshTheme();
+        }
+        else {
+            
         }
 
     }

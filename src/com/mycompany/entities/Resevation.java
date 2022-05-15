@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.entities;
 
 import java.util.Date;
@@ -19,6 +14,8 @@ public class Resevation {
 
     public Resevation() {
     }
+    
+    
 
     public Resevation(String etat, String datereservation, int id, int iduser) {
         this.etat = etat;
@@ -34,6 +31,12 @@ public class Resevation {
         this.id = id;
         this.iduser = iduser;
     }
+
+    public Resevation(String etat, String datereservation) {
+        this.etat = etat;
+        this.datereservation = datereservation;
+    }
+    
 
     public int getIdreservation() {
         return idreservation;

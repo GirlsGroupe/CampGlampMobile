@@ -8,9 +8,14 @@ package com.mycompany.gui;
 import com.codename1.components.InfiniteProgress;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
+import com.codename1.components.ToastBar;
+import com.codename1.ext.filechooser.FileChooser;
+import com.codename1.io.File;
+import com.codename1.io.FileSystemStorage;
+import com.codename1.io.Log;
+import com.codename1.io.Util;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
-import com.codename1.ui.ComboBox;
 import com.codename1.ui.Component;
 import static com.codename1.ui.Component.BOTTOM;
 import static com.codename1.ui.Component.CENTER;
@@ -23,6 +28,7 @@ import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
+import com.codename1.ui.Stroke;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
@@ -31,22 +37,26 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
+import com.codename1.ui.plaf.RoundRectBorder;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entities.Utilisateurs;
-import com.mycompany.services.servicesUtilisateurs;
-import java.util.Vector;
+import com.mycompany.entities.Publications;
+import com.mycompany.services.ServicePublications;
+import java.io.InputStream;
+import java.util.Random;
 
 /**
  *
  * @author MossMoss
  */
-public class AjouterUtilisateur extends BaseForm {
-
-    Form current;
-
-    public AjouterUtilisateur(Resources res) {
-    super("", BoxLayout.y());
+public class AjouterPublication extends BaseForm{
+     Form current;
+         private ServicePublications SP;
+    String GlobalPath = "";
+    String GlobalExtension = "";
+     
+         public AjouterPublication(Resources res) {
+         super("", BoxLayout.y());
 
         Toolbar tb = new Toolbar(true);
         current = this;
@@ -143,78 +153,109 @@ public class AjouterUtilisateur extends BaseForm {
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-    
-       
         
-        TextField Cin = new TextField("", "Numéro de cin",16,TextField.ANY);
-        Cin.setUIID("TextFieldBlack");
-        addStringValue("Cin", Cin);
-
-        TextField Nom = new TextField("", "Nom!",16,TextField.ANY);
-        Nom.setUIID("TextFieldBlack");
-        addStringValue("Nom", Nom);
-
-        TextField Prenom = new TextField("", " Prenom!",16,TextField.ANY);
-        Prenom.setUIID("TextFieldBlack");
-        addStringValue("Prenom", Prenom);
-
-        TextField Tel = new TextField("", "Numéro de téléphone!",16,TextField.ANY);
-        Tel.setUIID("TextFieldBlack");
-        addStringValue("Telephone", Tel);
-
-        TextField Adresse = new TextField("", "Adresse!",16,TextField.ANY);
-        Adresse.setUIID("TextFieldBlack");
-        addStringValue("Adresse", Adresse);
-
-        TextField Email = new TextField("", " Email!",16, TextField.ANY);
-        Email.setUIID("TextFieldBlack");
-        addStringValue("Email", Email);
-
-        TextField Motdepasse = new TextField("", "Mot de passe ", 16, TextField.PASSWORD);
-        Motdepasse.setUIID("TextFieldBlack");
-        addStringValue("Mot de passe", Motdepasse);
-
-        
+                Container f = new Container(BoxLayout.y());
 
         
         
-
-
-       
-        Button btnAdd = new Button("Ajouter");
-        addStringValue("",btnAdd);
+        TextField description = new TextField("", "écrivez votre description", 50, TextField.ANY);
+        description.getAllStyles().setFgColor(0x5f5f5f);
+        description.getAllStyles().setPaddingBottom(10);
+        description.getAllStyles().setBorder(RoundRectBorder.create().strokeColor(0).
+                strokeOpacity(50).
+                stroke(new Stroke(2, Stroke.CAP_SQUARE, Stroke.JOIN_MITER, 1)));
+        description.getAllStyles().setMarginLeft(1);
+        description.getAllStyles().setMarginRight(1);
+        description.getAllStyles().setMarginTop(1);
         
-        //Onclick event
-        btnAdd.addActionListener((e) -> {
-            try {
-                if(Cin.getText()=="" || Nom.getText()=="" ||  Prenom.getText()=="" ||  Tel.getText()=="" ||  Adresse.getText()=="" ||  Email.getText()=="" ||  Motdepasse.getText() == ""){
-                    Dialog.show("Veuillez saisir les champs manquants","" ,"Annuler", "OK");
-                } else {
-                    InfiniteProgress ip = new InfiniteProgress();
-                    final Dialog Dialogs = ip.showInfiniteBlocking();
-                    Utilisateurs u = new Utilisateurs(String.valueOf(Cin.getText().toString()).toString(),String.valueOf(Nom.getText().toString()).toString(),
-                    String.valueOf(Prenom.getText().toString()).toString(), String.valueOf(Tel.getText().toString()).toString(),
-                    String.valueOf(Adresse.getText().toString()).toString(),String.valueOf(Email.getText().toString()).toString(),
-                    String.valueOf(Motdepasse.getText().toString()).toString());
+          TextField tup = new TextField("", "Path");
 
-                            System.out.println("L'utilisateur ajoutée est :"+ u);
-                //appel fonction 
-                servicesUtilisateurs.getInstance().ajoutUtilisateur(u);
-                Dialogs.dispose(); // nahi el loading
-                new ListeUtilisateurs(res).show();
-                refreshTheme();//actualisation
-                }
-                
-                
-            } catch(Exception ex){
-                ex.printStackTrace();
-               
+        tup.getAllStyles().setFgColor(0x5f5f5f);
+        Button upload = new Button("importer");
+        Label limport = new Label("aucun fichier est  selectioné");
+        upload.addPointerPressedListener((ei) -> {
+            if (FileChooser.isAvailable()) {
+                FileChooser.showOpenDialog(".pdf,application/pdf,.gif,image/gif,.png,image/png,.jpg,image/jpg,.tif,image/tif,.jpeg", e2 -> {
+                    String file = (String) e2.getSource();
+                    System.out.println("file name :" + file);
+                    if (file == null) {
+                        System.out.println("No file was selected");
+                    } else {
+                        String extension = null;
+                        if (file.lastIndexOf(".") > 0) {
+                            extension = file.substring(file.lastIndexOf(".") + 1);
+                        }
+                        if ("txt".equals(extension)) {
+                            FileSystemStorage fs = FileSystemStorage.getInstance();
+                            try {
+                                InputStream fis = fs.openInputStream(file);
+                                System.out.println(Util.readToString(fis));
+                            } catch (Exception ex) {
+                                Log.e(ex);
+                            }
+                        } else {
+                            //moveFile(file,)
+                            String path = file.substring(7);
+                            System.out.println("Selected file :" + file.substring(44) + "\n" + "path :" + path);
+                            limport.setText("file imported");
+                            limport.getAllStyles().setFgColor(0x69E781);
+                            tup.setText(path);
+                            GlobalPath = path;
+                            GlobalExtension = file.substring(file.lastIndexOf(".") + 1);
+                        }
+                    }
+                });
             }
         });
+        Button submitPost = new Button("  Poster ");
 
-    }
+        submitPost.addPointerPressedListener((e) -> {
 
-    private void addStringValue(String s, Component c) {
+            Random rand = new Random();
+            int upperbound = 7483647;
+            int int_random = rand.nextInt(upperbound);
+            String Fullname = "MobileGenerated_" + int_random + "." + GlobalExtension;
+            System.out.println(Fullname);
+
+
+            boolean moving = moveFile(GlobalPath, "C:/xampp/htdocs/CampGlampWeb/public/uploads/PublicationImage/" + Fullname);
+
+            Publications p = new Publications();
+            p.setSourcePub(Fullname);
+            p.setIdU(SessionManager.getId());
+            
+            p.setDescriptionPub(description.getText());
+
+            if (ServicePublications.getInstance().addPublication(p)) {
+
+                ToastBar.Status status = ToastBar.getInstance().createStatus();
+                status.setMessage("Publication ajoutée");
+                status.show();
+                   new ListePublications(res).show();
+           
+            };
+        }
+            );
+                        Container csub = new Container(BoxLayout.x());
+ csub.addAll( submitPost);
+
+        Container cimport = new Container(new BorderLayout());
+
+        cimport.add(BorderLayout.WEST, limport);
+        cimport.add(BorderLayout.EAST, upload);
+
+        f.addAll(description, cimport);
+
+        add(f);
+        csub.getAllStyles().setMarginTop(750);
+        add(csub);
+        
+    
+}
+         
+         
+         
+          private void addStringValue(String s, Component c) {
         add(BorderLayout.west(new Label(s, "PaddedLabel"))
                 .add(BorderLayout.CENTER, c));
         add(createLineSeparator(0xeeeeee));
@@ -267,4 +308,12 @@ public class AjouterUtilisateur extends BaseForm {
         l.getUnselectedStyle().setMargin(LEFT, btn.getX() + btn.getWidth() / 2 - l.getWidth() / 2);
         l.getParent().repaint();
     }
+    
+    
+    public boolean moveFile(String sourcePath, String targetPath) {
+        System.out.println("inside movefile");
+        File fileToMove = new File(sourcePath);
+        return fileToMove.renameTo(new File(targetPath));
+    }
 }
+

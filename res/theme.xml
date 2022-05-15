@@ -26,6 +26,7 @@
     <image name="email.png"  />
     <image name="facebook-logo.png" type="multi"  />
     <image name="forgot-password.png"  />
+    <image name="loading.png"  />
     <image name="news-item-1.jpg"  />
     <image name="news-item-2.jpg"  />
     <image name="news-item-3.jpg"  />

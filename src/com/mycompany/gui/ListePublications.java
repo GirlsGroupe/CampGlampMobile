@@ -10,7 +10,6 @@ import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
-import com.codename1.ui.ComboBox;
 import com.codename1.ui.Component;
 import static com.codename1.ui.Component.BOTTOM;
 import static com.codename1.ui.Component.CENTER;
@@ -18,14 +17,17 @@ import static com.codename1.ui.Component.LEFT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
-import com.codename1.ui.TextField;
+import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -33,43 +35,39 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entities.Utilisateurs;
-import com.mycompany.services.servicesUtilisateurs;
-import java.util.Vector;
+import com.mycompany.entities.Publications;
+import com.mycompany.services.ServicePublications;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  *
  * @author MossMoss
  */
-public class AjouterUtilisateur extends BaseForm {
+public class ListePublications extends BaseForm  {
+        Form current;
 
-    Form current;
-
-    public AjouterUtilisateur(Resources res) {
-    super("", BoxLayout.y());
-
-        Toolbar tb = new Toolbar(true);
+    
+        public ListePublications(Resources res) {
+                 super("", BoxLayout.y()); //hesioste nen Newafeed w1 formulaire vertical
+        Toolbar tbar = new Toolbar(true);
         current = this;
-        setToolbar(tb);
+        setToolbar(tbar);
         getTitleArea().setUIID("Container");
-        setTitle("Ajouter Utilisateur");
+        setTitle("Liste des Utilisateurs ");
         getContentPane().setScrollVisible(false);
-
-        super.addSideMenu(res);
-
-        tb.addSearchCommand(e -> {
-
-        });
-
-        Tabs swipe = new Tabs();
+ super.addSideMenu(res);
+   Tabs swipe = new Tabs();
 
         Label s1 = new Label();
         Label s2 = new Label();
 
         addTab(swipe, s1, res.getImage("Wall.jpg"), "", "", res);
-  swipe.setUIID("Container");
+
+        swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
         swipe.hideTabs();
+        Container Cpost = new Container(BoxLayout.y());
 
         ButtonGroup bg = new ButtonGroup();
         int size = Display.getInstance().convertToPixels(1);
@@ -106,7 +104,7 @@ public class AjouterUtilisateur extends BaseForm {
         add(LayeredLayout.encloseIn(swipe, radioContainer));
 
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton mesListes = RadioButton.createToggle("Utilisateur", barGroup);
+        RadioButton mesListes = RadioButton.createToggle("Publications", barGroup);
         mesListes.setUIID("SelectBar");
         RadioButton partage = RadioButton.createToggle("Ajouter", barGroup);
         partage.setUIID("SelectBar");
@@ -116,16 +114,17 @@ public class AjouterUtilisateur extends BaseForm {
             InfiniteProgress ip = new InfiniteProgress();
             final Dialog ipDlg = ip.showInifiniteBlocking();
 
-            new ListeUtilisateurs(res).show();
+            new ListePublications(res).show();
             refreshTheme();
         });
         partage.addActionListener((e) -> {
             InfiniteProgress ip = new InfiniteProgress();
             final Dialog ipDlg = ip.showInifiniteBlocking();
 
-            new AjouterUtilisateur(res).show();
+            new AjouterPublication(res).show();
             refreshTheme();
         });
+
         add(LayeredLayout.encloseIn(
                 GridLayout.encloseIn(2, mesListes, partage),
                 FlowLayout.encloseBottom(arrow)
@@ -135,7 +134,7 @@ public class AjouterUtilisateur extends BaseForm {
         arrow.setVisible(false);
         addShowListener(e -> {
             arrow.setVisible(true);
-            updateArrowPosition(partage, arrow);
+            updateArrowPosition(mesListes, arrow);
         });
         bindButtonSelection(mesListes, arrow);
         bindButtonSelection(partage, arrow);
@@ -143,84 +142,78 @@ public class AjouterUtilisateur extends BaseForm {
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-    
+        
+        
+        
+          ArrayList<Publications> list = ServicePublications.getInstance().getAllPublications();
+
+        for (Publications pub : list) {
+            String urlImage = "http://127.0.0.1:8000/uploads/PublicationImage/"+pub.getSourcePub();
+                        System.out.println(urlImage);
+
+             EncodedImage enc3 = EncodedImage.createFromImage(res.getImage("loading.png"), true);
+             Image image = URLImage.createToStorage(enc3, urlImage, urlImage);
+              
+                Container single = addButton(pub, image, pub.getIdUser(), pub.getDescriptionPub(),pub.getNbrlikes(),pub.getDateCreation());
+                Cpost.add(single);    
+        }
+                add(Cpost);
+        }
+        
+        
+        
+        private Container addButton(Publications publication, Image img, LinkedHashMap<Object, Object> user, String title, int nbr, String DateC) {
+        int height = Display.getInstance().convertToPixels(61.5f);
+        int width = Display.getInstance().convertToPixels(60f);
+        Button image = new Button(img.fill(width, height));
+        image.setUIID("Label");
+        Container cnt = BorderLayout.center(image);
+        TextArea ta = new TextArea(title);
+        ta.setUIID("NewsTopLine2");
+        ta.setEditable(false);
+
+        TextArea ua = new TextArea("@"+(String) user.get("nomuser") + " " + (String) user.get("prenomuser"));
+        ua.setUIID("NewsTopLine2");
+        ua.setEditable(false);
+        Label likes = new Label(" Aimé par "+ nbr, "NewsBottomLine2");
+        Label datee = new Label(DateC);
+        datee.getAllStyles().setFgColor(0xC12222);
+
+
+        likes.getAllStyles().setFgColor(0x5f5f5f);
+        likes.setTextPosition(RIGHT);
+
+        Style s = new Style(likes.getUnselectedStyle());
+        s.setFgColor(0x5f5f5f);
+        FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
+        likes.setIcon(heartImage);
+
        
-        
-        TextField Cin = new TextField("", "Numéro de cin",16,TextField.ANY);
-        Cin.setUIID("TextFieldBlack");
-        addStringValue("Cin", Cin);
+        //FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
 
-        TextField Nom = new TextField("", "Nom!",16,TextField.ANY);
-        Nom.setUIID("TextFieldBlack");
-        addStringValue("Nom", Nom);
+        Container cua = new Container(new BorderLayout());
 
-        TextField Prenom = new TextField("", " Prenom!",16,TextField.ANY);
-        Prenom.setUIID("TextFieldBlack");
-        addStringValue("Prenom", Prenom);
+        cua.add(BorderLayout.WEST, ua);
+        cua.add(BorderLayout.EAST, datee);
 
-        TextField Tel = new TextField("", "Numéro de téléphone!",16,TextField.ANY);
-        Tel.setUIID("TextFieldBlack");
-        addStringValue("Telephone", Tel);
+        Label spacer1 = new Label("aa");
+        spacer1.getAllStyles().setFgColor(0xFFFFFF);
+        cnt.add(BorderLayout.NORTH, cua);
+        cnt.add(BorderLayout.SOUTH,
+                BoxLayout.encloseY(
+                        BoxLayout.encloseX(likes),
+                        ta,
+                        spacer1
+                ));
 
-        TextField Adresse = new TextField("", "Adresse!",16,TextField.ANY);
-        Adresse.setUIID("TextFieldBlack");
-        addStringValue("Adresse", Adresse);
-
-        TextField Email = new TextField("", " Email!",16, TextField.ANY);
-        Email.setUIID("TextFieldBlack");
-        addStringValue("Email", Email);
-
-        TextField Motdepasse = new TextField("", "Mot de passe ", 16, TextField.PASSWORD);
-        Motdepasse.setUIID("TextFieldBlack");
-        addStringValue("Mot de passe", Motdepasse);
-
-        
-
-        
-        
-
-
-       
-        Button btnAdd = new Button("Ajouter");
-        addStringValue("",btnAdd);
-        
-        //Onclick event
-        btnAdd.addActionListener((e) -> {
-            try {
-                if(Cin.getText()=="" || Nom.getText()=="" ||  Prenom.getText()=="" ||  Tel.getText()=="" ||  Adresse.getText()=="" ||  Email.getText()=="" ||  Motdepasse.getText() == ""){
-                    Dialog.show("Veuillez saisir les champs manquants","" ,"Annuler", "OK");
-                } else {
-                    InfiniteProgress ip = new InfiniteProgress();
-                    final Dialog Dialogs = ip.showInfiniteBlocking();
-                    Utilisateurs u = new Utilisateurs(String.valueOf(Cin.getText().toString()).toString(),String.valueOf(Nom.getText().toString()).toString(),
-                    String.valueOf(Prenom.getText().toString()).toString(), String.valueOf(Tel.getText().toString()).toString(),
-                    String.valueOf(Adresse.getText().toString()).toString(),String.valueOf(Email.getText().toString()).toString(),
-                    String.valueOf(Motdepasse.getText().toString()).toString());
-
-                            System.out.println("L'utilisateur ajoutée est :"+ u);
-                //appel fonction 
-                servicesUtilisateurs.getInstance().ajoutUtilisateur(u);
-                Dialogs.dispose(); // nahi el loading
-                new ListeUtilisateurs(res).show();
-                refreshTheme();//actualisation
-                }
-                
-                
-            } catch(Exception ex){
-                ex.printStackTrace();
-               
-            }
-        });
+        return cnt;
 
     }
-
-    private void addStringValue(String s, Component c) {
-        add(BorderLayout.west(new Label(s, "PaddedLabel"))
-                .add(BorderLayout.CENTER, c));
-        add(createLineSeparator(0xeeeeee));
-
-    }
-      private void addTab(Tabs swipe, Label spacer, Image image, String string, String text, Resources res) {
+ 
+        
+        
+        
+   private void addTab(Tabs swipe, Label spacer, Image image, String string, String text, Resources res) {
         int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
 
         if (image.getHeight() < size) {
@@ -267,4 +260,7 @@ public class AjouterUtilisateur extends BaseForm {
         l.getUnselectedStyle().setMargin(LEFT, btn.getX() + btn.getWidth() / 2 - l.getWidth() / 2);
         l.getParent().repaint();
     }
+
+    
+    
 }

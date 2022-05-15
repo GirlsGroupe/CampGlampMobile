@@ -103,9 +103,9 @@ public class ListReservation extends BaseForm {
         add(LayeredLayout.encloseIn(swipe, radioContainer));
 
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton mesListes = RadioButton.createToggle("Evenements", barGroup);
+        RadioButton mesListes = RadioButton.createToggle("Réservations", barGroup);
         mesListes.setUIID("SelectBar");
-        RadioButton partage = RadioButton.createToggle("Ajouter", barGroup);
+        RadioButton partage = RadioButton.createToggle("Réservations", barGroup);
         partage.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
 
@@ -119,8 +119,7 @@ public class ListReservation extends BaseForm {
         partage.addActionListener((e) -> {
             InfiniteProgress ip = new InfiniteProgress();
             final Dialog ipDlg = ip.showInifiniteBlocking();
-
-            new AddReservation(res).show();
+            new ListReservation(res).show();
             refreshTheme();
         });
 
@@ -147,17 +146,14 @@ public class ListReservation extends BaseForm {
              ArrayList<Resevation> list = ServiceReservation.getInstance().getReservation();
 
         for (Resevation reservation : list) {
-            addButton(reservation.getIdreservation(),
-                    reservation.getEtat(),
-                    reservation.getDatereservation(),
-                    reservation,res);
+            addButton(reservation,res);
 
         }
         }
 
  
-    private void addButton(int idreservation,String etat, String datereservation, Resevation reservation, Resources res) {
-       Label Name = new Label(etat);
+    private void addButton(Resevation reservation, Resources res) {
+       Label Name = new Label("Etat : " + reservation.getEtat(), "NewsTopLine1");
 
         Name.setUIID("NewaTopLine");
         Label Deletc = new Label(" ");
@@ -179,7 +175,8 @@ public class ListReservation extends BaseForm {
                             System.out.println("-----------------------------");
 
                 if (ServiceReservation.getInstance().deleteReservation(reservation.getIdreservation())) {
-
+                    System.out.println("-----------------------------");
+                    
                     System.out.println(reservation.getIdreservation());
                     new ListReservation(res).show();
                     refreshTheme();

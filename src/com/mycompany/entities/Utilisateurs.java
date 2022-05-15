@@ -33,6 +33,7 @@ public class Utilisateurs {
         this.adresseUser = adresseUser;
         this.email = email;
         this.motdepasse = motdepasse;
+
     }
 
     public Utilisateurs(int idUser, int isverified, String nomUser, String prenomUser, String telUser, String adresseUser, String email, String motdepasse, String cinUser, String image, String[] role) {

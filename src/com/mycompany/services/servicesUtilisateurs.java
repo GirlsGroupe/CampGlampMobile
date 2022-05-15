@@ -58,7 +58,8 @@ public class servicesUtilisateurs {
 
     //affichage 
     public void ajoutUtilisateur(Utilisateurs utilisateur) {
-        String url = Statics.Base_URL + "/mobile/addUsersM?cinuser=" + utilisateur.getCinUser() + "&nomuser=" + utilisateur.getNomUser() + "&prenomuser=" + utilisateur.getPrenomUser() + "&teluser=" + utilisateur.getTelUser() + "&adresseuser=" + utilisateur.getAdresseUser() + "&email=" + utilisateur.getEmail() + "&motdepasse=" + utilisateur.getMotdepasse() + "&role=" + Arrays.toString(utilisateur.getRole()) + "&image=" + utilisateur.getImage();
+        String url = Statics.Base_URL + "/mobile/addUsersM?cinuser=" + utilisateur.getCinUser() +
+       "&nomuser=" + utilisateur.getNomUser() + "&prenomuser=" + utilisateur.getPrenomUser() + "&teluser=" + utilisateur.getTelUser() + "&adresseuser=" + utilisateur.getAdresseUser() + "&email=" + utilisateur.getEmail() + "&motdepasse=" + utilisateur.getMotdepasse() + "&role=" + Arrays.toString(utilisateur.getRole()) + "&image=" + utilisateur.getImage();
         req.setUrl(url);
         req.addResponseListener((e) -> {
             String str = new String(req.getResponseData());
@@ -121,9 +122,9 @@ public class servicesUtilisateurs {
             Users = new ArrayList<>();
 
             JSONParser parser = new JSONParser();
-            /*System.out.println("-----------json----------------------");
+            System.out.println("-----------json----------------------");
             System.out.println(jsonTxt.toCharArray());
-             */
+             
             Map<String, Object> UsersJSON;
             UsersJSON = parser.parseJSON(new CharArrayReader(jsonTxt.toCharArray()));
             List<Map<String, Object>> listOfMaps;
